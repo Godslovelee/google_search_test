@@ -1,0 +1,26 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+# #User default chrome
+# service_args = Service()
+# driver = webdriver.Chrome(service=service_args)
+# driver.get("https://google.fcom")
+
+service_args = Service("/usr/local/bin/chromedriver")
+driver = webdriver.Chrome(service=service_args)
+driver.get("https://google.com")
+
+
+class GoogleMainPage:
+    URL = 'https://www.google.com'
+    SEARCH_INPUT = (By.NAME, 'q')
+
+    def __init__(self, browser):
+        self.browser = browser
+
+    def load(self):
+        self.browser.get(self.URL)
+
+    def search(self, phrase):
+        search_input = self.browser.find_element(*self.SEARCH_INPUT)
+        search_input.send_keys(phrase + Keys.RETURN)
